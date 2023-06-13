@@ -3,6 +3,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 import time
+import pandas as pd
 
 chrome_driver_path = "/Users/dacano/Documents/udemy.nosync/Web_Scraping/driver/chromedriver_mac_arm64"
 driver = webdriver.Chrome()
@@ -29,9 +30,11 @@ for match in matches:
         score.append(match_elements[2].text)
         away_team.append(match_elements[3].text)
 
-
 driver.quit()
 
+df = pd.DataFrame({"Date": date, "Home Team": home_team, "Score": score, "Away Team": away_team})
+df.to_csv("Soccer_data.csv", index=False)
+print(df)
 
 # XPath examples of console in web browser // example of assigning to variable below in step 4
 ###############################################################################################
