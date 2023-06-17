@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select
 import time
 import pandas as pd
 
@@ -30,10 +31,14 @@ for match in matches:
         score.append(match_elements[2].text)
         away_team.append(match_elements[3].text)
 
+dropdown = Select(driver.find_element(By.ID, "country"))
+dropdown.select_by_visible_text("France")
+time.sleep(5)
+
 driver.quit()
 
 df = pd.DataFrame({"Date": date, "Home Team": home_team, "Score": score, "Away Team": away_team})
-df.to_csv("Soccer_data.csv", index=False)
+df.to_csv("Soccer_data.csv", index=True, header=True)
 print(df)
 
 # XPath examples of console in web browser // example of assigning to variable below in step 4
